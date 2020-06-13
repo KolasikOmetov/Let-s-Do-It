@@ -1,6 +1,6 @@
-# letsdoit
+# let's do it
 
-A new Flutter application.
+Flutter application.
 
 ## Getting Started
 
