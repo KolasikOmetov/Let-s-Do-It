@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:letsdoit/screens/main_screen.dart';
+import 'package:letsdoit/screens/mainScreen/main_screen.dart';
 
 
 class App extends StatelessWidget{
