@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:letsdoit/screens/mainScreen/add_task_box.dart';
 import 'package:letsdoit/screens/mainScreen/task_box.dart';
 
 class ListOfTasks extends StatelessWidget{
@@ -27,7 +28,7 @@ class ListOfTasks extends StatelessWidget{
                 imageurl: '', id: 10),
         TaskBox('Помыть посуду', '',
                 imageurl: '', id: 10),
-      ],
+      ]..add(AddTaskBox()),
     );
   }
 }

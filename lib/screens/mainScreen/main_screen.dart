@@ -25,27 +25,7 @@ class MainScreen extends StatelessWidget{
       bottomNavigationBar: BottomAppBar(
         color:  Color(0xff2c18a7),
         child: 
-        Stack(
-          children: [
-            Calendar(),
-            Positioned(child: 
-              FloatingActionButton(
-                onPressed: () {
-                
-                },
-                tooltip: 'Add',
-                child: Text(
-                  "+",
-                  textAlign: TextAlign.center,
-                ),
-                backgroundColor: Color(0xffee5df7),
-                hoverColor: Color(0xff6600cc)
-              ),
-              bottom: 20,
-              right: 20,
-            )
-          ],
-        )
+            Calendar()
       ),
     );
   }

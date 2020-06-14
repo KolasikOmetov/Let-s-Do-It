@@ -23,19 +23,19 @@ class _CalendarState extends State<Calendar> {
             color: Color(0xffffffff),
             fontFamily: "Balsamiq Sans",
             fontWeight: FontWeight.w700,
-            fontSize: 24
+            fontSize: 20
           ),
           dayTextStyle: TextStyle(
             color: Color(0xffffffff),
             fontFamily: "Balsamiq Sans",
             fontWeight: FontWeight.w400,
-            fontSize: 20
+            fontSize: 16
           ),
           monthTextStyle: TextStyle(
             color: Color(0xffffffff),
             fontFamily: "Balsamiq Sans",
             fontWeight: FontWeight.w400,
-            fontSize: 20
+            fontSize: 16
           ),
           selectionColor: Color(0xffce4de7),
           onDateChange: (date) {

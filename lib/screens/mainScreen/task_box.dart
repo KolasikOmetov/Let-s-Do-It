@@ -70,7 +70,7 @@ class TaskBoxState extends State<TaskBox> {
                     Text(title,  
                       style:  
                         TextStyle(
-                          fontSize: 24.0,
+                          fontSize: 20.0,
                           fontWeight: FontWeight.w600
                         ), 
                       overflow: TextOverflow.ellipsis
