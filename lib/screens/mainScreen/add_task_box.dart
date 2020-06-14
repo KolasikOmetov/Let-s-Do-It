@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:letsdoit/model/task.dart';
 
 
 class AddTaskBox extends StatefulWidget {
@@ -8,10 +10,14 @@ class AddTaskBox extends StatefulWidget {
 }
 
 
-
 class TaskBoxState extends State<AddTaskBox> {
 
   TaskBoxState();
+
+  void addTask(Task task){
+    final tasksBox = Hive.box('tasks');
+    tasksBox.add(task);
+  }
 
   @override
   Widget build(BuildContext context) {

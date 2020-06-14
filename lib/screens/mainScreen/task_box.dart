@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:letsdoit/screens/mainScreen/task_box_done.dart';
 import 'package:letsdoit/screens/taskScreen/task_screen.dart';
 
 
@@ -8,16 +7,14 @@ class TaskBox extends StatefulWidget {
   String _text;
   String _imageurl;
   int _id;
-  bool _done;
 
   TaskBox(this._title, this._text, {String imageurl, int id}) {
     _imageurl = imageurl;
     _id = id;
-    _done = false;
   }
 
   @override
-  createState() =>  TaskBoxState(_title, _text, _imageurl, _id, _done);
+  createState() =>  TaskBoxState(_title, _text, _imageurl, _id);
 }
 
 
@@ -27,9 +24,8 @@ class TaskBoxState extends State<TaskBox> {
   String text;
   String imageurl;
   int id;
-  bool done;
 
-  TaskBoxState(this.title, this.text, this.imageurl, this.id, this.done);
+  TaskBoxState(this.title, this.text, this.imageurl, this.id);
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +74,7 @@ class TaskBoxState extends State<TaskBox> {
                     ]
                   )
                 )
-              ), TaskBoxDone(done)
+              )
             ])
           )
         )
