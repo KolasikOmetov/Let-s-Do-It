@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:letsdoit/screens/mainScreen/add_task_box.dart';
 import 'package:letsdoit/screens/mainScreen/calendar.dart';
 import 'package:letsdoit/screens/mainScreen/list_of_tasks.dart';
 
@@ -20,7 +21,13 @@ class MainScreen extends StatelessWidget{
           ),
         )
       ),
-      body: ListOfTasks(),
+      body: Column(
+        children: <Widget>[
+          ListOfTasks(),
+          AddTaskBox(),
+          // Text("here")
+        ],
+      ),
       
       bottomNavigationBar: BottomAppBar(
         color:  Color(0xff2c18a7),

@@ -17,6 +17,7 @@ class TaskBoxState extends State<AddTaskBox> {
   void addTask(Task task){
     final tasksBox = Hive.box('tasks');
     tasksBox.add(task);
+    print('I added task');
   }
 
   @override
@@ -24,7 +25,8 @@ class TaskBoxState extends State<AddTaskBox> {
     return
       GestureDetector(
         onTap: () {
-          
+          final newTask = Task(DateTime.now().millisecondsSinceEpoch, DateTime.now(), DateTime.now(), "Create app", "It's so intresting", "assets/images/water.jpg");
+          addTask(newTask);
         },
       child: 
         Container(

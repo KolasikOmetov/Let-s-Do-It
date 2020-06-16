@@ -1,34 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:letsdoit/screens/mainScreen/add_task_box.dart';
+import 'package:hive/hive.dart';
+import 'package:letsdoit/model/task.dart';
 import 'package:letsdoit/screens/mainScreen/task_box.dart';
 
-class ListOfTasks extends StatelessWidget{
+class ListOfTasks extends StatefulWidget{
+
+  @override
+  _ListOfTasksState createState() => _ListOfTasksState();
+}
+
+class _ListOfTasksState extends State<ListOfTasks> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        TaskBox('Помыть посуду', '',
-                imageurl: '', id: 10),
-        TaskBox('Помыть посуду', '',
-                imageurl: '', id: 10),
-        TaskBox('Помыть посуду', '',
-                imageurl: '', id: 10),
-        TaskBox('Помыть посуду', '',
-                imageurl: '', id: 10),
-        TaskBox('Помыть посуду', '',
-                imageurl: '', id: 10),
-        TaskBox('Помыть посуду', '',
-                imageurl: '', id: 10),
-        TaskBox('Помыть посуду', '',
-                imageurl: '', id: 10),
-        TaskBox('Помыть посуду', '',
-                imageurl: '', id: 10),
-        TaskBox('Помыть посуду', '',
-                imageurl: '', id: 10),
-        TaskBox('Помыть посуду', '',
-                imageurl: '', id: 10),
-      ]..add(AddTaskBox()),
+    final tasksBox = Hive.box('tasks');
+    //tasksBox.watch().listen((event) { });
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: tasksBox.length,
+      itemBuilder: (context, index) {
+        final task = tasksBox.getAt(index) as Task;
+        print(task.title+task.description);
+        return TaskBox(task.title, task.description, imageurl: task.imageurl, id: task.id);
+      },
     );
   }
 }

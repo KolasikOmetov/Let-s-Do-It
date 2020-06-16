@@ -15,18 +15,18 @@ class _AppState extends State<App> {
       debugShowCheckedModeBanner: false,
       theme: _theme(context),
       home: FutureBuilder(
-        future: Hive.openBox('tasks'),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError)
-              return Text(snapshot.error.toString());
+          future: Hive.openBox('tasks'),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError)
+                return Text(snapshot.error.toString());
+              else
+                return MainScreen();
+            }
             else
-              return MainScreen();
+              return Scaffold();
           }
-          else
-            return Scaffold();
-        }
-      ) 
+        )
     );
   }
 

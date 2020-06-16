@@ -5,6 +5,7 @@ import 'app.dart';
 import 'model/task.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final doc = await getApplicationDocumentsDirectory();
   Hive.init(doc.path);
   Hive.registerAdapter(TaskAdapter());
