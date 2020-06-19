@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:letsdoit/model/task.dart';
+import 'package:letsdoit/taskState/state.dart';
+import 'package:provider/provider.dart';
 
 
 class AddTaskBox extends StatefulWidget {
@@ -14,19 +16,18 @@ class TaskBoxState extends State<AddTaskBox> {
 
   TaskBoxState();
 
-  void addTask(Task task){
-    final tasksBox = Hive.box('tasks');
-    tasksBox.add(task);
-    print('I added task');
-  }
 
   @override
   Widget build(BuildContext context) {
     return
       GestureDetector(
         onTap: () {
-          final newTask = Task(DateTime.now().millisecondsSinceEpoch, DateTime.now(), DateTime.now(), "Create app", "It's so intresting", "assets/images/water.jpg");
-          addTask(newTask);
+          final tasksBox = Hive.box('tasks');
+          // final newTask = Task(tasksBox.length, DateTime.now(), DateTime.now(), "Create app", "It's so intresting", "");
+          // tasksBox.add(newTask);
+          Provider.of<TasksState>(context, listen: false).addTask(
+            Task(tasksBox.length, DateTime.now(), DateTime.now(), "Create app", "It's so intresting", "")
+            );
         },
       child: 
         Container(

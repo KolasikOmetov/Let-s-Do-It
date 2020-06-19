@@ -39,10 +39,7 @@ class _CalendarState extends State<Calendar> {
           ),
           selectionColor: Color(0xffce4de7),
           onDateChange: (date) {
-            // // New date selected
-            // setState(() {
-            //   _selectedValue = date;
-            // });
+            
           },
         );
   }

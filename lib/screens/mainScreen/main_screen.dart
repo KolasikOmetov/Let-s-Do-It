@@ -24,8 +24,7 @@ class MainScreen extends StatelessWidget{
       body: Column(
         children: <Widget>[
           ListOfTasks(),
-          AddTaskBox(),
-          // Text("here")
+          AddTaskBox()
         ],
       ),
       

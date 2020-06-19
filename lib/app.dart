@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:letsdoit/screens/mainScreen/main_screen.dart';
+import 'package:letsdoit/taskState/state.dart';
+import 'package:provider/provider.dart';
+
 
 class App extends StatefulWidget{
 
@@ -15,18 +18,23 @@ class _AppState extends State<App> {
       debugShowCheckedModeBanner: false,
       theme: _theme(context),
       home: FutureBuilder(
-          future: Hive.openBox('tasks'),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasError)
-                return Text(snapshot.error.toString());
-              else
-                return MainScreen();
-            }
+        future: Hive.openBox('tasks'),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError)
+              return Text(snapshot.error.toString());
             else
-              return Scaffold();
+              return
+                ChangeNotifierProvider(
+                  create: (context) => TasksState(),
+                  child:
+                    MainScreen()
+                );
           }
-        )
+          else
+            return Scaffold();
+        }
+      )
     );
   }
 
