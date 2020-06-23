@@ -4,14 +4,15 @@ import 'package:letsdoit/model/task.dart';
 class TaskRepository {
   final tasksBox = Hive.box('tasks');
 
-  List<Task> getTasksByDate(DateTime date){
+  List<Task> getTasksByDate(DateTime date) {
     List<Task> allTasks = [];
-    for(var i = 0; i < tasksBox.length; i++){
+    for (var i = 0; i < tasksBox.length; i++) {
       final task = tasksBox.getAt(i) as Task;
-      if((task.dateStart.millisecondsSinceEpoch >= date.millisecondsSinceEpoch)
-          &&
-          (task.dateStart.millisecondsSinceEpoch < date.millisecondsSinceEpoch + 86400000))
-        allTasks.add(task);
+      print(task.dateStart.toString());
+      if ((task.dateStart.millisecondsSinceEpoch >=
+              date.millisecondsSinceEpoch) &&
+          (task.dateStart.millisecondsSinceEpoch <
+              date.millisecondsSinceEpoch + 86400000)) allTasks.add(task);
     }
     return allTasks;
   }
@@ -20,10 +21,10 @@ class TaskRepository {
 
   updateTask(int id, Task task) => tasksBox.putAt(id, task);
 
-  deleteTaskById(int id){
-    for(int i = 0; i < tasksBox.length; i++){
+  deleteTaskById(int id) {
+    for (int i = 0; i < tasksBox.length; i++) {
       final task = tasksBox.getAt(i) as Task;
-      if(task.id == id){
+      if (task.id == id) {
         tasksBox.deleteAt(i);
         break;
       }

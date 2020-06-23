@@ -19,5 +19,6 @@ class Task {
   @HiveField(5)
   final String imageurl;
 
-  Task(this.id, this.dateStart, this.dateFinish, this.title, this.description, this.imageurl);
+  Task(this.id, this.dateStart, this.dateFinish, this.title, this.description,
+      this.imageurl);
 }

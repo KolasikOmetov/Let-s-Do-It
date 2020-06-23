@@ -1,68 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:letsdoit/model/task.dart';
 import 'package:letsdoit/screens/taskScreen/task_screen.dart';
 
-
 class TaskBox extends StatefulWidget {
-  String _title;
-  String _description;
-  String _imageurl;
-  int _id;
+  Task task;
 
-  TaskBox(this._title, this._description, {String imageurl, int id}) {
-    _imageurl = imageurl;
-    _id = id;
-  }
+  TaskBox(this.task);
 
   @override
-  createState() =>  TaskBoxState(_title, _description, _imageurl, _id);
+  createState() => TaskBoxState(task);
 }
 
-
-
 class TaskBoxState extends State<TaskBox> {
-  String title;
-  String description;
-  String imageurl;
-  int id;
+  Task task;
 
-  TaskBoxState(this.title, this.description, this.imageurl, this.id);
+  TaskBoxState(this.task);
 
   @override
   Widget build(BuildContext context) {
-    return
-      GestureDetector(
+    return GestureDetector(
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TaskScreen(5, "name", "description", DateTime.now(), DateTime.now())),
+            MaterialPageRoute(
+                builder: (context) => TaskScreen(
+                    5, "name", "description", DateTime.now(), DateTime.now())),
           );
         },
-      child: 
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          color: Color(0xff6600cc),
-          height: 70.0,
-          child: Row(children: [
-            (imageurl != null && imageurl != '') ? 
-              Image.network(imageurl, width: 100.0, height: 100.0, fit: BoxFit.scaleDown) 
-              : 
-              Container(),
-            Expanded(child:  
-              Container(padding:  EdgeInsets.all(5.0), child:  Column(children: [
-                  Text(title,  
-                    style:  
-                      TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w600
-                      ), 
-                    overflow: TextOverflow.ellipsis
-                  )
-                  ]
-                )
-              )
-            )
-          ])
-        )
-      );
+        child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+            color: Color(0xff6600cc),
+            height: 70.0,
+            child: Row(children: [
+              (task.imageurl != null && task.imageurl != '')
+                  ? Image.network(task.imageurl,
+                      width: 100.0, height: 100.0, fit: BoxFit.scaleDown)
+                  : Container(),
+              Expanded(
+                  child: Container(
+                      padding: EdgeInsets.all(5.0),
+                      child: Column(children: [
+                        Text(task.title,
+                            style: TextStyle(
+                                fontSize: 20.0, fontWeight: FontWeight.w600),
+                            overflow: TextOverflow.ellipsis)
+                      ])))
+            ])));
   }
 }

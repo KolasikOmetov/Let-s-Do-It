@@ -3,8 +3,7 @@ import 'package:letsdoit/screens/mainScreen/task_box.dart';
 import 'package:letsdoit/taskState/state.dart';
 import 'package:provider/provider.dart';
 
-
-class ListOfTasks extends StatefulWidget{
+class ListOfTasks extends StatefulWidget {
   ListOfTasks();
 
   @override
@@ -16,36 +15,31 @@ class _ListOfTasksState extends State<ListOfTasks> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<TasksState>(context, listen: false).getTasksByCurDate();
-    return Consumer<TasksState>(
-      builder: (context, state, child) {
-        return ListView.builder(
-          shrinkWrap: true,
-          itemCount: state.tasks.length,
-          itemBuilder: (context, index) {
-            final task = state.tasks[index];
-            return Dismissible(
-              background: 
-              Container(
-                color: Color(0xffce4de7),
-                child: Center(
-                  child: Text("Удаляем...",
-                  style: TextStyle(
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.w400),  
-                  ),
-                )
-              ),
+    return Consumer<TasksState>(builder: (context, state, child) {
+      print("i rebuild");
+      state.getTasksByCurDate();
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: state.tasks.length,
+        itemBuilder: (context, index) {
+          final task = state.tasks[index];
+          return Dismissible(
+              background: Container(
+                  color: Color(0xffce4de7),
+                  child: Center(
+                    child: Text(
+                      "Удаляем...",
+                      style: TextStyle(
+                          fontSize: 30.0, fontWeight: FontWeight.w400),
+                    ),
+                  )),
               key: UniqueKey(),
               onDismissed: (direction) {
                 state.deleteTaskById(task.id);
               },
-              child:
-                TaskBox(task.title, task.description, imageurl: task.imageurl, id: task.id)
-            );
-          },
-        );
-      }
-    );
+              child: TaskBox(task));
+        },
+      );
+    });
   }
 }
