@@ -1,31 +1,27 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
+import 'package:intl/intl.dart';
+import 'package:letsdoit/model/task.dart';
+import 'package:letsdoit/taskState/state.dart';
+import 'package:provider/provider.dart';
 
 class TaskScreen extends StatefulWidget {
-  final int id;
-  final String name;
-  final String description;
-  final DateTime dateStart;
-  final DateTime dateEnd;
+  final Task task;
 
-  TaskScreen(
-      this.id, this.name, this.description, this.dateStart, this.dateEnd);
+  TaskScreen(this.task);
 
   @override
-  _TaskScreenState createState() => _TaskScreenState(
-      this.id, this.name, this.description, this.dateStart, this.dateEnd);
+  _TaskScreenState createState() => _TaskScreenState(task);
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  int id;
-  String name;
-  String description;
-  DateTime dateStart;
-  DateTime dateEnd;
+  Task task;
+  final newFormat = DateFormat("HH:mm");
 
   bool _isEditing = false;
 
-  _TaskScreenState(
-      this.id, this.name, this.description, this.dateStart, this.dateEnd);
+  _TaskScreenState(this.task);
 
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -37,68 +33,230 @@ class _TaskScreenState extends State<TaskScreen> {
     super.dispose();
   }
 
+  Widget showToast(String message) {
+    return Flushbar(
+      message: message,
+      duration: Duration(seconds: 3),
+      backgroundColor: Theme.of(context).accentColor,
+      margin: EdgeInsets.all(8),
+      borderRadius: 8,
+    )..show(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    _nameController.text = name;
-    _descriptionController.text = description;
+    _nameController.text = task.title;
+    _descriptionController.text = task.description;
     return Scaffold(
-      backgroundColor: Color(0xff2c18a7),
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  print("I switch state delete and go out");
-                }),
-            IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  setState(() {
-                    _isEditing = !_isEditing;
-                  });
-                }),
-          ],
+        backgroundColor: Color(0xff2c18a7),
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    Provider.of<TasksState>(context, listen: false)
+                        .deleteTaskById(task.id);
+                    Navigator.pop(context);
+                  }),
+              IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    if (_isEditing == true) {
+                      // update
+                      final testId =
+                          (task.dateStart.millisecondsSinceEpoch / 60000)
+                              .round();
+                      if (Provider.of<TasksState>(context, listen: false)
+                          .containTaskById(testId)) {
+                        return showToast(
+                            "У вас уже установлено задание на это время");
+                      }
+                      task.id = testId;
+                      Provider.of<TasksState>(context, listen: false)
+                          .updateTask(task.id, task);
+                      setState(() {
+                        _isEditing = false;
+                      });
+                      return null;
+                    } else {
+                      setState(() {
+                        _isEditing = true;
+                      });
+                      return null;
+                    }
+                  }),
+            ],
+          ),
         ),
-      ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            child: _isEditing
-                ? TextField(
-                    decoration: InputDecoration(
-                        hintText: 'Название задания',
-                        hintStyle:
-                            TextStyle(color: Theme.of(context).accentColor)),
-                    controller: _nameController)
-                : Text(widget.name),
-          ),
-          Container(
-            child: _isEditing
-                ? TextField(
-                    decoration: InputDecoration(
-                        hintText: 'Описание задания',
-                        hintStyle:
-                            TextStyle(color: Theme.of(context).accentColor)),
-                    maxLines: null,
-                    controller: _descriptionController)
-                : Text(widget.description),
-          ),
-          Container(
-              child: Center(
-            child: _isEditing
-                ? Text("Date Picker")
-                : Text(widget.dateStart.toString()),
-          )),
-          Container(
-              child: Center(
-            child: _isEditing
-                ? Text("Date Picker")
-                : Text(widget.dateEnd.toString()),
-          )),
-        ],
-      ),
-    );
+        body: _isEditing
+            ? SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 5),
+                        margin: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(color: Color(0xff6600cc)),
+                        child: TextField(
+                            decoration: InputDecoration(
+                                hintText: 'Название задания',
+                                hintStyle: TextStyle(
+                                    color: Theme.of(context).accentColor)),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .headline5
+                                    .fontSize),
+                            controller: _nameController,
+                            onChanged: (value) => task.title = value)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 5),
+                      child: Text(
+                        "Описание",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize:
+                                Theme.of(context).textTheme.bodyText1.fontSize,
+                            color: Theme.of(context).accentColor),
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.all(10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 5),
+                        decoration:
+                            BoxDecoration(color: Theme.of(context).accentColor),
+                        child: TextField(
+                            decoration: InputDecoration(
+                                hintText: 'Описание задания',
+                                hintStyle: TextStyle(
+                                    color: Theme.of(context).accentColor)),
+                            maxLines: null,
+                            controller: _descriptionController,
+                            onChanged: (value) => task.description = value)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 5),
+                      child: Text(
+                        "Время",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize:
+                                Theme.of(context).textTheme.bodyText1.fontSize,
+                            color: Theme.of(context).accentColor),
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.all(10),
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(child: Text("Выберите время начала дела")),
+                            TimePickerSpinner(
+                              time: task.dateStart,
+                              normalTextStyle:
+                                  TextStyle(fontSize: 20, color: Colors.white),
+                              highlightedTextStyle: TextStyle(
+                                  fontSize: 20, color: Color(0xffce4de7)),
+                              spacing: 25,
+                              itemHeight: 40,
+                              isForce2Digits: true,
+                              onTimeChange: (time) {
+                                task.dateStart = time;
+                              },
+                            ),
+                          ],
+                        )),
+                    Container(
+                        margin: EdgeInsets.all(10),
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(child: Text("Выберите время конца дела")),
+                            TimePickerSpinner(
+                              time: task.dateFinish,
+                              normalTextStyle:
+                                  TextStyle(fontSize: 20, color: Colors.white),
+                              highlightedTextStyle: TextStyle(
+                                  fontSize: 20, color: Color(0xffce4de7)),
+                              spacing: 25,
+                              itemHeight: 40,
+                              isForce2Digits: true,
+                              onTimeChange: (time) {
+                                task.dateFinish = time;
+                              },
+                            ),
+                          ],
+                        )),
+                  ],
+                ),
+              )
+            : SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Center(
+                      child: Container(
+                          padding: EdgeInsets.all(15),
+                          margin: EdgeInsets.all(10),
+                          decoration: BoxDecoration(color: Color(0xff6600cc)),
+                          child: Text(task.title,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .headline5
+                                      .fontSize))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 5),
+                      child: Text(
+                        "Описание",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize:
+                                Theme.of(context).textTheme.bodyText1.fontSize,
+                            color: Theme.of(context).accentColor),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 5),
+                      decoration:
+                          BoxDecoration(color: Theme.of(context).accentColor),
+                      child: task.description == ''
+                          ? Text("Нет описания")
+                          : Text(task.description),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 5),
+                      child: Text(
+                        "Время",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize:
+                                Theme.of(context).textTheme.bodyText1.fontSize,
+                            color: Theme.of(context).accentColor),
+                      ),
+                    ),
+                    Container(
+                        child: Center(
+                      child: Text("С " + newFormat.format((task.dateStart))),
+                    )),
+                    Container(
+                        child: Center(
+                      child: Text("До " + newFormat.format((task.dateFinish))),
+                    )),
+                  ],
+                ),
+              ));
   }
 }

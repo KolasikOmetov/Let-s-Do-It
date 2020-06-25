@@ -5,19 +5,19 @@ part 'task.g.dart';
 @HiveType(typeId: 0)
 class Task {
   @HiveField(0)
-  final int id;
+  int id;
 
   @HiveField(1)
-  final DateTime dateStart;
+  DateTime dateStart;
   @HiveField(2)
-  final DateTime dateFinish;
+  DateTime dateFinish;
 
   @HiveField(3)
-  final String title;
+  String title;
   @HiveField(4)
-  final String description;
+  String description;
   @HiveField(5)
-  final String imageurl;
+  String imageurl;
 
   Task(this.id, this.dateStart, this.dateFinish, this.title, this.description,
       this.imageurl);

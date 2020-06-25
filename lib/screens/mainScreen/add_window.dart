@@ -1,7 +1,7 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
-import 'package:intl/intl.dart';
+import 'package:letsdoit/model/task.dart';
 import 'package:letsdoit/taskState/state.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +16,7 @@ class _AddWindowState extends State<AddWindow> {
   String description = '';
   DateTime dateStart;
   DateTime dateEnd;
-  final formatDate = DateFormat("Hm");
+  String imageurl = '';
 
   @override
   Widget build(BuildContext context) {
@@ -93,26 +93,34 @@ class _AddWindowState extends State<AddWindow> {
             child: Text('ОК'),
             onPressed: () {
               if (name == "") {
-                Flushbar(
-                  message: "Вы не ввели название задания",
-                  duration: Duration(seconds: 3),
-                  backgroundColor: Theme.of(context).accentColor,
-                  margin: EdgeInsets.all(8),
-                  borderRadius: 8,
-                )..show(context);
-                return;
+                return showToast("Вы не ввели название задания");
               }
-              // final tasksBox = Hive.box('tasks');
-              // replace whole logic into .addTask()
-              // ars: this.id, this.dateStart, this.dateFinish, this.title, this.description, this.imageurl
-              // id: = this.dateStart.millisecondsSinceEpoch / 60000
-              // check of exist and answer that this place is occuped
-
-              // Provider.of<TasksState>(context, listen: false).addTask(
-              //   Task(tasksBox.length, DateTime.now(), DateTime.now(), "Create app", "It's so intresting", "")
-              //   );
+              if (dateEnd.isBefore(dateStart) ||
+                  dateEnd.isAtSameMomentAs(dateStart)) {
+                return showToast(
+                    "Времена не могу совпадать или быть в обратном порядке");
+              }
+              id = (dateStart.millisecondsSinceEpoch / 60000).round();
+              if (Provider.of<TasksState>(context, listen: false)
+                  .containTaskById(id)) {
+                return showToast("У вас уже установлено задание на это время");
+              }
+              Provider.of<TasksState>(context, listen: false).addTask(
+                  Task(id, dateStart, dateEnd, name, description, imageurl));
+              Navigator.pop(context);
+              return showToast("Задание было добавлено");
             })
       ],
     );
+  }
+
+  Widget showToast(String message) {
+    return Flushbar(
+      message: message,
+      duration: Duration(seconds: 3),
+      backgroundColor: Theme.of(context).accentColor,
+      margin: EdgeInsets.all(8),
+      borderRadius: 8,
+    )..show(context);
   }
 }

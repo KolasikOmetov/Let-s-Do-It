@@ -8,7 +8,7 @@ class TaskRepository {
     List<Task> allTasks = [];
     for (var i = 0; i < tasksBox.length; i++) {
       final task = tasksBox.getAt(i) as Task;
-      print(task.dateStart.toString());
+      print(task.id);
       if ((task.dateStart.millisecondsSinceEpoch >=
               date.millisecondsSinceEpoch) &&
           (task.dateStart.millisecondsSinceEpoch <
@@ -19,7 +19,15 @@ class TaskRepository {
 
   createTask(Task task) => tasksBox.add(task);
 
-  updateTask(int id, Task task) => tasksBox.putAt(id, task);
+  updateTask(int id, Task task) {
+    for (int i = 0; i < tasksBox.length; i++) {
+      final task = tasksBox.getAt(i) as Task;
+      if (task.id == id) {
+        tasksBox.putAt(i, task);
+        break;
+      }
+    }
+  }
 
   deleteTaskById(int id) {
     for (int i = 0; i < tasksBox.length; i++) {

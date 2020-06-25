@@ -6,7 +6,7 @@ import 'package:letsdoit/taskState/repo.dart';
 
 class TasksState extends ChangeNotifier {
   final _taskRepository = TaskRepository();
-  final List<Task> _tasks = [];
+  List<Task> _tasks = [];
   DateTime _curDate = DateTime.parse(
       DateTime.now().toString().substring(0, 11) + "00:00:00.000");
 
@@ -15,18 +15,17 @@ class TasksState extends ChangeNotifier {
   DateTime get curDate => _curDate;
 
   getTasksByCurDate() {
-    _tasks..addAll(_taskRepository.getTasksByDate(_curDate));
+    _tasks = _taskRepository.getTasksByDate(_curDate);
+    _tasks.sort((a, b) => a.id.compareTo(b.id));
   }
 
   setCurDate(DateTime date) {
     _curDate = date;
-    print(_curDate);
     notifyListeners();
   }
 
   addTask(Task task) {
     _taskRepository.createTask(task);
-    _tasks.add(task);
     print('i added ${task.id}');
     notifyListeners();
   }
@@ -47,5 +46,17 @@ class TasksState extends ChangeNotifier {
     _taskRepository.deleteTaskById(id);
     print('i deleted $id');
     notifyListeners();
+  }
+
+  bool containTaskById(int id) {
+    for (int i = 0; i < _tasks.length; i++) {
+      final task = _tasks[i];
+      if (task.id == id) {
+        print('i found $id');
+        return true;
+      }
+    }
+    print("i didn't find $id");
+    return false;
   }
 }
