@@ -30,8 +30,8 @@ class TasksState extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateTask(int id, Task task) {
-    _taskRepository.updateTask(id, task);
+  updateTask(int oldId, int newId, Task task) {
+    _taskRepository.updateTask(oldId, newId, task);
     notifyListeners();
   }
 

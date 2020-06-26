@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:letsdoit/screens/mainScreen/add_task_box.dart';
 import 'package:letsdoit/screens/mainScreen/task_box.dart';
 import 'package:letsdoit/taskState/state.dart';
 import 'package:provider/provider.dart';
@@ -16,12 +17,14 @@ class _ListOfTasksState extends State<ListOfTasks> {
   @override
   Widget build(BuildContext context) {
     return Consumer<TasksState>(builder: (context, state, child) {
-      print("i rebuild");
       state.getTasksByCurDate();
       return ListView.builder(
         shrinkWrap: true,
-        itemCount: state.tasks.length,
+        itemCount: state.tasks.length + 1,
         itemBuilder: (context, index) {
+          if (index == state.tasks.length) {
+            return AddTaskBox();
+          }
           final task = state.tasks[index];
           return Dismissible(
               background: Container(

@@ -22,12 +22,13 @@ class TaskBoxState extends State<TaskBox> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => TaskScreen(task)),
           );
         },
         child: Container(
+            constraints: BoxConstraints(maxHeight: 150, minHeight: 70),
             // margin: EdgeInsets.symmetric(vertical: 5),
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
             color: Color(0xff6600cc),
@@ -38,18 +39,13 @@ class TaskBoxState extends State<TaskBox> {
                   Expanded(
                     child: Container(
                         padding: EdgeInsets.all(5.0),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(task.title,
-                                  style: TextStyle(
-                                      fontSize: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .fontSize,
-                                      fontWeight: FontWeight.w600),
-                                  overflow: TextOverflow.ellipsis)
-                            ])),
+                        child: Text(task.title,
+                            style: TextStyle(
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    .fontSize,
+                                fontWeight: FontWeight.w600))),
                   ),
                   Container(
                       padding: EdgeInsets.all(5.0),

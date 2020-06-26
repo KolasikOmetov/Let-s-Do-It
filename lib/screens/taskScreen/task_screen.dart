@@ -17,6 +17,7 @@ class TaskScreen extends StatefulWidget {
 
 class _TaskScreenState extends State<TaskScreen> {
   Task task;
+  DateTime prevDate;
   final newFormat = DateFormat("HH:mm");
 
   bool _isEditing = false;
@@ -45,6 +46,7 @@ class _TaskScreenState extends State<TaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    prevDate = task.dateStart;
     _nameController.text = task.title;
     _descriptionController.text = task.description;
     return Scaffold(
@@ -53,29 +55,61 @@ class _TaskScreenState extends State<TaskScreen> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    Provider.of<TasksState>(context, listen: false)
-                        .deleteTaskById(task.id);
-                    Navigator.pop(context);
-                  }),
+              Row(
+                children: <Widget>[
+                  IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: () {
+                        if (_isEditing) {
+                          return showToast(
+                              "Сначала выйдите из режима редактирования");
+                        }
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            "/", (Route<dynamic> route) => false);
+                        return null;
+                      }),
+                  IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        Provider.of<TasksState>(context, listen: false)
+                            .deleteTaskById(task.id);
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            "/", (Route<dynamic> route) => false);
+                      }),
+                ],
+              ),
               IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
-                    if (_isEditing == true) {
-                      // update
-                      final testId =
-                          (task.dateStart.millisecondsSinceEpoch / 60000)
-                              .round();
-                      if (Provider.of<TasksState>(context, listen: false)
-                          .containTaskById(testId)) {
-                        return showToast(
-                            "У вас уже установлено задание на это время");
+                    if (_isEditing) {
+                      if (task.title == "") {
+                        return showToast("Вы не ввели название задания");
                       }
-                      task.id = testId;
+                      if (task.dateFinish.isBefore(task.dateStart) ||
+                          task.dateFinish.isAtSameMomentAs(task.dateStart)) {
+                        return showToast(
+                            "Времена не могу совпадать или быть в обратном порядке");
+                      }
+                      if (prevDate != task.dateStart) {
+                        final testId =
+                            (task.dateStart.millisecondsSinceEpoch / 60000)
+                                .round();
+                        if (Provider.of<TasksState>(context, listen: false)
+                            .containTaskById(testId)) {
+                          return showToast(
+                              "У вас уже установлено задание на это время");
+                        } else {
+                          Provider.of<TasksState>(context, listen: false)
+                              .updateTask(task.id, testId, task);
+                          task.id = testId;
+                          setState(() {
+                            _isEditing = false;
+                          });
+                          return null;
+                        }
+                      }
                       Provider.of<TasksState>(context, listen: false)
-                          .updateTask(task.id, task);
+                          .updateTask(task.id, task.id, task);
                       setState(() {
                         _isEditing = false;
                       });

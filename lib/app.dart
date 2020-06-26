@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:letsdoit/screens/mainScreen/main_screen.dart';
 import 'package:letsdoit/taskState/state.dart';
@@ -10,6 +11,13 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -39,9 +47,10 @@ class _AppState extends State<App> {
   ThemeData _theme(BuildContext context) {
     return ThemeData(
         textTheme: Theme.of(context).textTheme.apply(
-            fontFamily: 'Balsamiq Sans',
-            fontSizeDelta: 10,
-            bodyColor: Colors.white,
-            displayColor: Color(0xff2c18a7)));
+              fontFamily: 'Balsamiq Sans',
+              fontSizeDelta: 10,
+              bodyColor: Colors.white,
+              displayColor: Color(0xff2c18a7),
+            ));
   }
 }

@@ -21,4 +21,19 @@ class Task {
 
   Task(this.id, this.dateStart, this.dateFinish, this.title, this.description,
       this.imageurl);
+
+  Task.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        dateStart = DateTime.fromMillisecondsSinceEpoch(json['date_start']),
+        dateFinish = DateTime.fromMillisecondsSinceEpoch(json['date_finish']),
+        title = json['name'],
+        description = json['description'];
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "date_start": dateStart.millisecondsSinceEpoch,
+        "date_finish": dateFinish.millisecondsSinceEpoch,
+        "name": title,
+        "description": description
+      };
 }
