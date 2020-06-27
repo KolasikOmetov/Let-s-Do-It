@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:letsdoit/screens/mainScreen/calendar.dart';
 import 'package:letsdoit/screens/mainScreen/list_of_tasks.dart';
+import 'package:letsdoit/screens/settingsScreen/settings_screen.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -23,7 +24,12 @@ class MainScreen extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(Icons.settings),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsScreen()),
+                  );
+                },
               )
             ],
           )),

@@ -38,7 +38,7 @@ class _TaskScreenState extends State<TaskScreen> {
     return Flushbar(
       message: message,
       duration: Duration(seconds: 3),
-      backgroundColor: Theme.of(context).accentColor,
+      backgroundColor: Color(0xffce4de7),
       margin: EdgeInsets.all(8),
       borderRadius: 8,
     )..show(context);
@@ -279,7 +279,12 @@ class _TaskScreenState extends State<TaskScreen> {
                             BoxDecoration(color: Theme.of(context).accentColor),
                         child: task.description == ''
                             ? Text("Нет описания")
-                            : Text(task.description),
+                            : SelectableText(task.description,
+                            showCursor: true,
+                            toolbarOptions: ToolbarOptions(copy: true),
+                            cursorColor: Color(0xffce4de7),
+                            cursorWidth: 5,
+                            ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(

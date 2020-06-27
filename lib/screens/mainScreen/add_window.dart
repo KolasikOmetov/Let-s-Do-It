@@ -118,7 +118,7 @@ class _AddWindowState extends State<AddWindow> {
     return Flushbar(
       message: message,
       duration: Duration(seconds: 3),
-      backgroundColor: Theme.of(context).accentColor,
+      backgroundColor: Color(0xffce4de7),
       margin: EdgeInsets.all(8),
       borderRadius: 8,
     )..show(context);
