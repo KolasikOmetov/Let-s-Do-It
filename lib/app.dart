@@ -23,6 +23,7 @@ class _AppState extends State<App> {
     return ChangeNotifierProvider(
         create: (context) => TasksState(),
         child: MaterialApp(
+            title: "Let's do",
             debugShowCheckedModeBanner: false,
             theme: _theme(context),
             home: FutureBuilder(

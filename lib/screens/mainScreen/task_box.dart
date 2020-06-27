@@ -28,11 +28,9 @@ class TaskBoxState extends State<TaskBox> {
           );
         },
         child: Container(
-            constraints: BoxConstraints(maxHeight: 150, minHeight: 70),
             // margin: EdgeInsets.symmetric(vertical: 5),
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
             color: Color(0xff6600cc),
-            height: 70.0,
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
