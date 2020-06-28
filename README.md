@@ -3,6 +3,7 @@
 ![alt text](https://github.com/KolasikOmetov/Let-s-Do-It/blob/CalendaryStyle/assets/images/Let's%20do%20it%20icon.png?raw=true)
 
 Flutter application for creating daily calendary tasks.
+
 APK: https://github.com/KolasikOmetov/Let-s-Do-It/blob/CalendaryStyle/Let's%20Do%20It.apk
 
 ## Components
