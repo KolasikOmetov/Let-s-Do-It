@@ -38,3 +38,8 @@ https://pub.dev/packages/url_launcher
 
 Customizable Icons for Flutter developers. Port of react-native-vector-icons.
 https://pub.dev/packages/flutter_vector_icons
+
+#### P.S.
+
+App works on Android API 27 and above.
+About working on iOS I don't now, because I don't have iOS emulator 
