@@ -59,11 +59,11 @@ class _AddWindowState extends State<AddWindow> {
                       time: Provider.of<TasksState>(context, listen: false)
                           .curDate,
                       normalTextStyle:
-                          TextStyle(fontSize: 20, color: Colors.white),
+                          TextStyle(fontSize: 15, color: Colors.white),
                       highlightedTextStyle:
-                          TextStyle(fontSize: 20, color: Color(0xffce4de7)),
-                      spacing: 25,
-                      itemHeight: 40,
+                          TextStyle(fontSize: 15, color: Color(0xffce4de7)),
+                      spacing: 10,
+                      itemHeight: 30,
                       isForce2Digits: true,
                       onTimeChange: (time) {
                         dateStart = time;
@@ -79,11 +79,11 @@ class _AddWindowState extends State<AddWindow> {
                       time: Provider.of<TasksState>(context, listen: false)
                           .curDate,
                       normalTextStyle:
-                          TextStyle(fontSize: 20, color: Colors.white),
+                          TextStyle(fontSize: 15, color: Colors.white),
                       highlightedTextStyle:
-                          TextStyle(fontSize: 20, color: Color(0xffce4de7)),
-                      spacing: 25,
-                      itemHeight: 40,
+                          TextStyle(fontSize: 15, color: Color(0xffce4de7)),
+                      spacing: 10,
+                      itemHeight: 30,
                       isForce2Digits: true,
                       onTimeChange: (time) {
                         dateEnd = time;
