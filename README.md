@@ -1,16 +1,40 @@
-# let's do it
+# Let's Do It
 
-Flutter application.
+Flutter application for creating daily calendary tasks.
 
-## Getting Started
+## Components
 
-This project is a starting point for a Flutter application.
+### DatePickerTimeline
 
-A few resources to get you started if this is your first Flutter project:
+Flutter Date Picker Library that provides a calendar as a horizontal timeline.
+https://pub.dev/packages/date_picker_timeline
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Hive
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Hive is a lightweight and blazing fast key-value database written in pure Dart.
+https://pub.dev/packages/hive
+
+### ChangeNotifier & ChangeNotifierProvider
+
+Simple app state management
+https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple
+
+### Flushbar
+
+Customization of user's notifications 
+https://pub.dev/packages/flushbar
+
+### flutter_time_picker_spinner
+
+Time Picker widget with spinner instead of a material time picker.
+https://pub.dev/packages/flutter_time_picker_spinner
+
+### url_launcher
+
+A Flutter plugin for launching a URL in the mobile platform. Supports iOS and Android.
+https://pub.dev/packages/url_launcher
+
+### flutter_vector_icons
+
+Customizable Icons for Flutter developers. Port of react-native-vector-icons.
+https://pub.dev/packages/flutter_vector_icons
