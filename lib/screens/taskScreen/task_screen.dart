@@ -193,50 +193,48 @@ class _TaskScreenState extends State<TaskScreen> {
                               color: Theme.of(context).accentColor),
                         ),
                       ),
-                      Container(
-                          margin: EdgeInsets.all(10),
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                  child: Text("Выберите время начала дела")),
-                              TimePickerSpinner(
-                                time: task.dateStart,
-                                normalTextStyle: TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                                highlightedTextStyle: TextStyle(
-                                    fontSize: 20, color: Color(0xffce4de7)),
-                                spacing: 25,
-                                itemHeight: 40,
-                                isForce2Digits: true,
-                                onTimeChange: (time) {
-                                  task.dateStart = time;
-                                },
-                              ),
-                            ],
-                          )),
-                      Container(
-                          margin: EdgeInsets.all(10),
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                  child: Text("Выберите время конца дела")),
-                              TimePickerSpinner(
-                                time: task.dateFinish,
-                                normalTextStyle: TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                                highlightedTextStyle: TextStyle(
-                                    fontSize: 20, color: Color(0xffce4de7)),
-                                spacing: 25,
-                                itemHeight: 40,
-                                isForce2Digits: true,
-                                onTimeChange: (time) {
-                                  task.dateFinish = time;
-                                },
-                              ),
-                            ],
-                          )),
+                      Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Начало"),
+                    TimePickerSpinner(
+                      time: task.dateStart,
+                      normalTextStyle:
+                          TextStyle(fontSize: 20, color: Colors.white),
+                      highlightedTextStyle:
+                          TextStyle(fontSize: 20, color: Color(0xffce4de7)),
+                      spacing: 25,
+                      itemHeight: 40,
+                      isForce2Digits: true,
+                      onTimeChange: (time) {
+                        task.dateStart = time;
+                      },
+                    ),
+                  ],
+                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Конец"),
+                    TimePickerSpinner(
+                      time: task.dateFinish,
+                      normalTextStyle:
+                          TextStyle(fontSize: 20, color: Colors.white),
+                      highlightedTextStyle:
+                          TextStyle(fontSize: 20, color: Color(0xffce4de7)),
+                      spacing: 25,
+                      itemHeight: 40,
+                      isForce2Digits: true,
+                      onTimeChange: (time) {
+                        task.dateFinish = time;
+                      },
+                    ),
+                  ],
+                )
+            ]),
                     ],
                   ),
                 )

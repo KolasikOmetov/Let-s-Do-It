@@ -38,11 +38,23 @@ class _AddWindowState extends State<AddWindow> {
                     hintStyle: TextStyle(color: Theme.of(context).accentColor)),
                 onChanged: (value) => description = value,
                 maxLines: null),
-            Container(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Row(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              child: Text(
+                "Время",
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: Theme.of(context).textTheme.bodyText1.fontSize,
+                    color: Theme.of(context).accentColor),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Expanded(child: Text("Выберите время начала дела")),
+                    Text("Начало"),
                     TimePickerSpinner(
                       time: Provider.of<TasksState>(context, listen: false)
                           .curDate,
@@ -58,12 +70,11 @@ class _AddWindowState extends State<AddWindow> {
                       },
                     ),
                   ],
-                )),
-            Container(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Row(
+                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Expanded(child: Text("Выберите время конца дела")),
+                    Text("Конец"),
                     TimePickerSpinner(
                       time: Provider.of<TasksState>(context, listen: false)
                           .curDate,
@@ -79,7 +90,8 @@ class _AddWindowState extends State<AddWindow> {
                       },
                     ),
                   ],
-                )),
+                )
+            ]),
           ],
         ),
       ),
@@ -98,7 +110,7 @@ class _AddWindowState extends State<AddWindow> {
               if (dateEnd.isBefore(dateStart) ||
                   dateEnd.isAtSameMomentAs(dateStart)) {
                 return showToast(
-                    "Времена не могу совпадать или быть в обратном порядке");
+                    "Времена не могут совпадать или быть в обратном порядке");
               }
               id = (dateStart.millisecondsSinceEpoch / 60000).round();
               if (Provider.of<TasksState>(context, listen: false)
