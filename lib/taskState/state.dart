@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:letsdoit/model/task.dart';
+import 'package:letsdoit/notifications/notifications_methods.dart';
 import 'package:letsdoit/taskState/repo.dart';
 
 class TasksState extends ChangeNotifier {
@@ -26,6 +27,7 @@ class TasksState extends ChangeNotifier {
 
   addTask(Task task) {
     _taskRepository.createTask(task);
+    NotificationsMethods.scheduleAlarm(task);
     print('i added ${task.id}');
     notifyListeners();
   }

@@ -28,13 +28,13 @@ class _AddWindowState extends State<AddWindow> {
           children: <Widget>[
             TextField(
               decoration: InputDecoration(
-                  hintText: 'Название задания',
+                  hintText: 'Название',
                   hintStyle: TextStyle(color: Theme.of(context).accentColor)),
               onChanged: (value) => name = value,
             ),
             TextField(
                 decoration: InputDecoration(
-                    hintText: 'Описание задания',
+                    hintText: 'Описание',
                     hintStyle: TextStyle(color: Theme.of(context).accentColor)),
                 onChanged: (value) => description = value,
                 maxLines: null),

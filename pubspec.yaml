@@ -35,6 +35,7 @@ dependencies:
   flutter_time_picker_spinner: ^1.0.6+1
 
   url_launcher: ^5.4.11
+  flutter_local_notifications: ^1.4.4+2
   flutter_vector_icons:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
