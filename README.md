@@ -4,7 +4,10 @@
 
 Flutter application for creating daily calendary tasks.
 
-APK: https://github.com/KolasikOmetov/Let-s-Do-It/blob/CalendaryStyle/Let's%20Do%20It.apk
+APK 1.0.0 (stable, but without notifications): https://github.com/KolasikOmetov/Let-s-Do-It/blob/CalendaryStyle/Let's%20Do%20It%201.0.0.apk
+
+APK 1.1.0 (with notifications, but not stable): https://github.com/KolasikOmetov/Let-s-Do-It/blob/CalendaryStyle/Let's%20Do%20It%201.1.0.apk
+Scheduled notifications may not work when the application is in the background on certain devices (e.g. by Xiaomi, Huawei)
 
 ## Components
 
@@ -49,6 +52,12 @@ https://pub.dev/packages/url_launcher
 Customizable Icons for Flutter developers. Port of react-native-vector-icons.
 
 https://pub.dev/packages/flutter_vector_icons
+
+### flutter_local_notifications
+
+A cross platform plugin for displaying local notifications.
+
+https://pub.dev/packages/flutter_local_notifications
 
 #### P.S.
 
