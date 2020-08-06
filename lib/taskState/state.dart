@@ -27,13 +27,15 @@ class TasksState extends ChangeNotifier {
 
   addTask(Task task) {
     _taskRepository.createTask(task);
-    NotificationsMethods.scheduleAlarm(task);
+    NotificationsMethods.scheduleTask(task);
     print('i added ${task.id}');
     notifyListeners();
   }
 
   updateTask(int oldId, int newId, Task task) {
-    _taskRepository.updateTask(oldId, newId, task);
+    var updatedTask = _taskRepository.updateTask(oldId, newId, task);
+    NotificationsMethods.deleteNotificationChannel(oldId.toString());
+    NotificationsMethods.scheduleTask(updatedTask);
     notifyListeners();
   }
 
@@ -46,6 +48,7 @@ class TasksState extends ChangeNotifier {
       }
     }
     _taskRepository.deleteTaskById(id);
+    NotificationsMethods.deleteNotificationChannel(id.toString());
     print('i deleted $id');
     notifyListeners();
   }

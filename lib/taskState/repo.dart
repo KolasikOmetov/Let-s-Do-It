@@ -19,15 +19,16 @@ class TaskRepository {
 
   createTask(Task task) => tasksBox.add(task);
 
-  updateTask(int oldId, int newId, Task task) {
+  Task updateTask(int oldId, int newId, Task task) {
     for (int i = 0; i < tasksBox.length; i++) {
       final task = tasksBox.getAt(i) as Task;
       if (task.id == oldId) {
         task.id = newId;
         tasksBox.putAt(i, task);
-        break;
+        return task;
       }
     }
+    return null;
   }
 
   deleteTaskById(int id) {
